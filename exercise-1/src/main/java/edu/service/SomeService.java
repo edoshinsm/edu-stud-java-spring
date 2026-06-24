@@ -32,10 +32,9 @@ public class SomeService {
     /**
      * Вывод лог-сообщений
      *
-     * @param messages - сообщение
+     * @param messages - сообщения
      */
     public void printLogs(String[] messages) {
         Arrays.stream(messages).forEach(logger::printLog);
-        //Arrays.stream(messages).forEach(IO::println);
     }
 }
