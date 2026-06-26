@@ -1,0 +1,5 @@
+app:
+  name: "app-name"
+  version: "1.0.0"
+  description: "this is my app"
+some-other-property: null
