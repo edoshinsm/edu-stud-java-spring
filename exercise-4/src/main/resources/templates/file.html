@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Файловая система</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui container">
+    <div class="ui vertical segment">
+        <h1 class="ui center aligned header">Файловая система</h1>
+        <form th:action="@{/}" method="get" class="ui form">
+            <div class="field">
+                <label>Путь к директории</label>
+                <div class="ui action fluid input">
+                    <input type="text" name="path" placeholder="C:\Users" th:value="${currentPath}">
+                    <button class="ui blue button" type="submit">Перейти</button>
+                </div>
+            </div>
+            <div class="field">
+                <button class="ui blue button" type="button" th:if="${parentPath != null}" th:onclick="'location.href=\'' + @{/(path=${parentPath})} + '\''">Назад</button>
+            </div>
+            <table th:if="${not #lists.isEmpty(dirs) or not #lists.isEmpty(files)}" class="ui striped selectable table">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Тип</th>
+                    <th>Имя</th>
+                    <th>Размер</th>
+                    <th>Дата модификации</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="dir, iterStat : ${dirs}" th:onclick="'location.href=\'' + @{/(path=${dir.path})} + '\''">
+                    <td th:text="${iterStat.count}">temp_1</td>
+                    <td th:text="Папка">temp_dir</td>
+                    <td th:text="${dir.name}">temp_name</td>
+                    <td th:text="${null}">temp_weight</td>
+                    <td th:text="${null}">temp_date</td>
+                </tr>
+                <tr th:each="file, iterStat : ${files}">
+                    <td th:text="${iterStat.count + dirs.size}">temp_1</td>
+                    <td th:text="Файл">temp_dir</td>
+                    <td th:text="${file.name}">temp_name</td>
+                    <td th:text="${file.size}">temp_weight</td>
+                    <td th:text="${file.lastModified}">temp_date</td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <div th:if="${error}" class="ui negative message">
+            <p th:text="${error}">Ошибка</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
